@@ -238,36 +238,119 @@ public:
     {
         cout << "Please, feel free to order something!" << endl;
         int running = 1;
+        int choice = 0;
+        unsigned int pizzaType = 0;
+        PizzaSize pizzaSize;
+        unsigned int cheeseNum = 0;
+        unsigned int saltNum = 0;
 
-        OrderNewItem:
+    OrderNewItem:
         while(running) {
             cout << "Type number of pizza (or 0, if you done with your order)!" << endl;
             cout << "1. Cool Pizza" << endl;
             cout << "2. Normie Pizza" << endl;
             cout << "3. Best Pizza" << endl;
             cout << "4. Worst Pizza" << endl;
-            int choice;
-            unsigned int pizzaType = 0;
+
 
             cin >> choice;
-            //TODO: switch case
+            switch(choice)
+            {
+                case 0:
+                {
+                    running = 0;
+                    return;
+                }
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                {
+                    pizzaType = choice;
+                } break;
+            }
+            cout << "Choose size " << endl;
 
+            ChooseSize:
+            cout << "Type number of size (or 0, want to escape)!" << endl;
+            cout << "1. Smallest" << endl;
+            cout << "2. Small" << endl;
+            cout << "3. Big" << endl;
+            cout << "4. Super Big" << endl;
 
+            cin >> choice;
+            switch (choice)
+            {
+                case 0:
+                {
+                    return;
+                }
+                case 1:
+                {
+                    pizzaSize = smallest;
+                } break;
+                case 2:
+                {
+                    pizzaSize = small;
+                } break;
+                case 3:
+                {
+                    pizzaSize = big;
+                } break;
+                case 4:
+                {
+                    pizzaSize = superBig;
+                } break;
+            }
+            cout << "Cheese or Salt?" << endl;
+            ChooseCheeseSalt:
+            cout << "1. More cheese!" << endl;
+            cout << "2. More salt!!" << endl;
+            cout << "3. I just want my pizza, plz" << endl;
+
+            cin >> choice;
+            switch(choice)
+            {
+                case 1:
+                {
+                    cout << "How much more?" << endl;
+                    cin >> cheeseNum;
+                } goto ChooseCheeseSalt;
+                case 2:
+                {
+                    cout << "How much more?" << endl;
+                    cin >> saltNum;
+                } goto ChooseCheeseSalt;
+                case 3: break;
+            }
+
+            switch(pizzaType)
+            {
+                case 1:
+                {
+                    Add(new CoolPizza(pizzaSize, cheeseNum, saltNum));
+                } break;
+                case 2:
+                {
+                    Add(new NormiePizza(pizzaSize, cheeseNum, saltNum));
+                } break;
+                case 3:
+                {
+                    Add(new BestPizza(pizzaSize, cheeseNum, saltNum));
+                } break;
+                case 4:
+                {
+                    Add(new WorstPizza(pizzaSize, cheeseNum, saltNum));
+                } break;
+            }
         }
     }
 };
 
 
-
-
-
-
-
-
-
-
-
-
 int main() {
+    Order order;
+    order.Interact();
+    order.Print();
     return 0;
 }
